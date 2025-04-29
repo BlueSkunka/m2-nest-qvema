@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "QVEMA",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

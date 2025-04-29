@@ -1,0 +1,21 @@
+services:
+  db_qvema:
+    container_name: db_qvema
+    image: mariadb:11.7.2
+    environment:
+      MYSQL_DATABASE: "qvema"
+      MYSQL_USER: "qvema"
+      MYSQL_ROOT_PASSWORD: "qvema"
+      MYSQL_PASSWORD: "qvema"
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-data:/var/lib/mysl
+    networks:
+      - qvema
+
+volumes:
+  db-data:
+
+networks:
+  qvema:

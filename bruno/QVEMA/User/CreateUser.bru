@@ -1,0 +1,25 @@
+meta {
+  name: CreateUser
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{url}}/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "quentin@mail.com",
+    "name": "Quentin",
+    "password": "password"
+  }
+}
+
+body:multipart-form {
+  email: quentin@mail.com
+  name: Quentin
+  password: password
+}
