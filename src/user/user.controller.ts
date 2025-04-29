@@ -16,11 +16,6 @@ export class UserController {
         return this.userService.findOne(+id);
     }
 
-    @Get('/search/:email')
-    async findOneByEmail(@Param('email') email: string): Promise<UserEntity | null> {
-        return this.userService.findOneByEmail(email);
-    }
-
     @Post()
     async createUser(@Body() userData: Partial<UserEntity>): Promise<UserEntity> {
         console.log(userData);
