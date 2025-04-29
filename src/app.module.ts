@@ -17,7 +17,7 @@ import { Module } from '@nestjs/common';
       password: process.env.DATABASE_PASSWORD || 'password',
       database: process.env.DATABASE_NAME || 'qvema',
       autoLoadEntities: true,
-      synchronize: true
+      synchronize: true,
     })
   ],
   controllers: [AppController],
