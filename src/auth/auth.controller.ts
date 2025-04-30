@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserEntity } from '../entities/user.entity';
+import { User } from '../entities/user';
 
 @Controller({path: 'auth'})
 export class AuthController {
@@ -10,7 +10,7 @@ export class AuthController {
   }
 
   @Post('in')
-  async login(@Body() credentials: Partial<UserEntity | null>) {
+  async login(@Body() credentials: Partial<User | null>) {
     return this.authService.login(credentials);
   }
 }

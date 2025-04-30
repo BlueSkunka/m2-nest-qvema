@@ -1,6 +1,6 @@
 import { DataSourceOptions } from 'typeorm';
 import { SeederOptions } from 'typeorm-extension';
-import { UserEntity } from './entities/user.entity';
+import { User } from './entities/user';
 
 import * as env from 'dotenv';
 
@@ -15,5 +15,5 @@ export const typeormConfig: DataSourceOptions & SeederOptions = {
   database: process.env.DB_NAME || 'qvema',
   synchronize: true,
   ssl: false,
-  entities: [UserEntity]
+  entities: [User]
 }

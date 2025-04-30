@@ -1,6 +1,6 @@
 import { Seeder } from '@jorgebodega/typeorm-seeding';
 import { Connection } from 'typeorm';
-import { UserEntity } from '../entities/user.entity';
+import { User } from '../entities/user';
 import { faker } from '@faker-js/faker/locale/fr';
 
 export default class CreateUsers implements Seeder {
@@ -8,7 +8,7 @@ export default class CreateUsers implements Seeder {
     await connection
       .createQueryBuilder()
       .insert()
-      .into(UserEntity)
+      .into(User)
       .values([
         { name: faker.person.fullName(), email: faker.internet.exampleEmail(), password: faker.internet.password()},
         { name: 'Audrey', email: 'audrey@mail.com', password: 'password'}
