@@ -1,0 +1,15 @@
+meta {
+  name: Admin
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{url}}/users/admin
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InF1ZW50aW5AbWFpbC5jb20iLCJpYXQiOjE3NDU5OTcwOTQsImV4cCI6MTc0NjAwMDY5NH0.Uw29oCQOKGAKEzkK2wJgNoh4TWY0xq4cnKa3UUfAsF4
+}

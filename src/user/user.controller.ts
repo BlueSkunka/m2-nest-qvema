@@ -2,8 +2,12 @@ import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/c
 import { UserService } from './user.service';
 import { UserEntity } from '../entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { JwtGuard } from '../auth/jwt.guard';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles';
 
 @Controller({ path: 'users' })
+@UseGuards(JwtGuard, RolesGuard)
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
@@ -12,10 +16,15 @@ export class UserController {
         return this.userService.findAll();
     }
 
-    @UseGuards(AuthGuard('jwt'))
     @Get('profile')
-    async profile(@Headers('authorization') authHeader: string) {
-        return { headers: authHeader};
+    async profile() {
+        return { message: 'Utilisateur autorisé'};
+    }
+
+    @Roles('admin')
+    @Get('admin')
+    async admin() {
+        return {message: 'User is admin'}
     }
 
     @Get(':id')
