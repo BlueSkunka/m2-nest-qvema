@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserEntity } from '../entities/user.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller({ path: 'users' })
 export class UserController {
@@ -9,6 +10,12 @@ export class UserController {
     @Get()
     async findAll(): Promise<UserEntity[]> {
         return this.userService.findAll();
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('profile')
+    async profile(@Headers('authorization') authHeader: string) {
+        return { headers: authHeader};
     }
 
     @Get(':id')
