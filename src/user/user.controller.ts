@@ -8,6 +8,7 @@ import { Roles } from '../auth/roles';
 import { FastifyRequest } from 'fastify';
 import { UserDecorator } from 'src/auth/user.decorator';
 import { PayloadInterface } from 'src/auth/payload.interface';
+import { plainToInstance } from 'class-transformer';
 
 @Controller({ path: 'users' })
 @UseGuards(JwtGuard, RolesGuard)
@@ -22,7 +23,7 @@ export class UserController {
     @Get('profile')
     async profile(@UserDecorator() payload: PayloadInterface) {
         const userInfo = this.userService.findOne(payload.userId);
-        return  userInfo;
+        return  plainToInstance(User, userInfo);
     }
 
     @Roles('admin')
