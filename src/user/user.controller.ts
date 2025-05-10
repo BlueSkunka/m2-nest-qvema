@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../entities/user';
 import { AuthGuard } from '@nestjs/passport';
@@ -24,6 +24,12 @@ export class UserController {
     async profile(@UserDecorator() payload: PayloadInterface) {
         const userInfo = this.userService.findOne(payload.userId);
         return  plainToInstance(User, userInfo);
+    }
+
+    @Put('profile')
+    async profileEdit(@Body() user: Partial<User>, @UserDecorator() payload: PayloadInterface) {
+        const updatedUser = this.userService.update(user, payload.userId);
+        return plainToInstance(User, updatedUser);
     }
 
     @Roles('admin')

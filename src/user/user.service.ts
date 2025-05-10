@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from '../entities/user';
 import { InjectRepository } from '@nestjs/typeorm';
 import UserRepository from './user.repository';
@@ -25,6 +25,22 @@ export class UserService {
         const newUser = this.userRepository.create(userData);
         newUser.password = await bcrypt.hash(newUser.password, 10);
         return this.userRepository.save(newUser);
+    }
+
+    async update(userData: Partial<User>, id: number): Promise<User> {
+        const user = await this.userRepository.findOne({ where: { id } });
+
+        if (!user) {
+            throw new NotFoundException('Utilisateur non trouvé');
+        }
+
+        if (userData.password) {
+            userData.password = bcrypt.hashSync(userData.password, 10);
+        }
+
+        Object.assign(user, userData);
+
+        return this.userRepository.save(user);
     }
 
     async remove(id: number): Promise<void> {
