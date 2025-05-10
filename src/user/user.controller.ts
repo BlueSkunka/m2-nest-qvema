@@ -7,6 +7,7 @@ import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles';
 import { FastifyRequest } from 'fastify';
 import { UserDecorator } from 'src/auth/user.decorator';
+import { PayloadInterface } from 'src/auth/payload.interface';
 
 @Controller({ path: 'users' })
 @UseGuards(JwtGuard, RolesGuard)
@@ -19,8 +20,8 @@ export class UserController {
     }
 
     @Get('profile')
-    async profile(@UserDecorator() user: any) {
-        const userInfo = this.userService.findOne(user.userId);
+    async profile(@UserDecorator() payload: PayloadInterface) {
+        const userInfo = this.userService.findOne(payload.userId);
         return  userInfo;
     }
 
