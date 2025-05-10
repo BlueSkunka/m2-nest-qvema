@@ -1,0 +1,26 @@
+meta {
+  name: CreateUser
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "test@mail.com",
+    "name": "Personne",
+    "password": "password",
+    "role": "admin"
+  }
+}
+
+body:multipart-form {
+  email: quentin@mail.com
+  name: Quentin
+  password: password
+}

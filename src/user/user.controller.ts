@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../entities/user';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtGuard } from '../auth/jwt.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles';
+import { FastifyRequest } from 'fastify';
+import { UserDecorator } from 'src/auth/user.decorator';
 
 @Controller({ path: 'users' })
 @UseGuards(JwtGuard, RolesGuard)
@@ -17,8 +19,9 @@ export class UserController {
     }
 
     @Get('profile')
-    async profile() {
-        return { message: 'Utilisateur autorisé'};
+    async profile(@UserDecorator() user: any) {
+        const userInfo = this.userService.findOne(user.userId);
+        return  userInfo;
     }
 
     @Roles('admin')
