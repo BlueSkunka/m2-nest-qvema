@@ -32,12 +32,6 @@ export class UserController {
         return this.userService.findOne(+id);
     }
 
-    @Post()
-    async createUser(@Body() userData: Partial<User>): Promise<User> {
-        console.log(userData);
-        return this.userService.create(userData);
-    }
-
     @Delete(':id')
     async deleteUser(@Param('id') id: number): Promise<void> {
         return this.userService.remove(id);

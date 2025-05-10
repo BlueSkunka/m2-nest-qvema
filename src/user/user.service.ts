@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { User } from '../entities/user';
 import { InjectRepository } from '@nestjs/typeorm';
 import UserRepository from './user.repository';
+import * as bcrypt from 'bcrypt';
+import { DeepPartial } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -19,8 +21,9 @@ export class UserService {
         return this.userRepository.findOne({where: {id}});
     }
 
-    async create(userData: Partial<User>): Promise<User> {
+    async create(userData: DeepPartial<User>): Promise<User> {
         const newUser = this.userRepository.create(userData);
+        newUser.password = await bcrypt.hash(newUser.password, 10);
         return this.userRepository.save(newUser);
     }
 

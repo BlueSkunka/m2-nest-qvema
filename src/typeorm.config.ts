@@ -15,5 +15,7 @@ export const typeormConfig: DataSourceOptions & SeederOptions = {
   database: process.env.DB_NAME || 'qvema',
   synchronize: true,
   ssl: false,
-  entities: [User]
+  entities: [User],
+  seeds: ['src/seeds/**/*{.ts,.js'],
+  factories: ['src/factories/**/*{.ts,.js}']
 }
