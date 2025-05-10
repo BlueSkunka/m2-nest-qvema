@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../entities/user';
 import { AuthGuard } from '@nestjs/passport';
@@ -29,6 +29,9 @@ export class UserController {
 
     @Put('profile')
     async profileEdit(@Body() user: Partial<User>, @UserDecorator() payload: PayloadInterface) {
+        if (user.role) {
+            throw new ForbiddenException("Vous ne pouvez pas modifier votre rôle");
+        }
         const updatedUser = this.userService.update(user, payload.userId);
         return plainToInstance(User, updatedUser);
     }

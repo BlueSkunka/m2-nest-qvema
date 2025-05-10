@@ -5,7 +5,19 @@ meta {
 }
 
 put {
-  url: {{url}}
-  body: none
-  auth: none
+  url: {{url}}/users/profile
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name": "Quelqu'un",
+    "password": "caribou",
+    "role": "admin"
+  }
 }
