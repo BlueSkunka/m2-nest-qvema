@@ -1,6 +1,6 @@
 export interface PayloadInterface {
   email: string;
-  userId: number;
+  userId: string;
   role: string;
   iat: number;
   exp: number;

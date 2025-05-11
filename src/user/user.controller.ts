@@ -44,11 +44,11 @@ export class UserController {
 
     @Get(':id')
     async findOne(@Param('id') id: string): Promise<User | null> {
-        return this.userService.findOne(+id);
+        return this.userService.findOne(id);
     }
 
     @Delete(':id')
-    async deleteUser(@Param('id') id: number): Promise<void> {
+    async deleteUser(@Param('id') id: string): Promise<void> {
         return this.userService.remove(id);
     }
 }

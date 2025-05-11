@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import * as env from 'dotenv';
 import { AppDataSource } from './datasource';
+import { DatabaseExceptionFiter } from 'src/commons/filters/database.exception.fiter';
 
 env.config();
 
@@ -19,6 +20,9 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter({logger: true})
   );
+
+  app.useGlobalFilters(new DatabaseExceptionFiter());
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

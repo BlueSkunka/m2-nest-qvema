@@ -3,6 +3,8 @@ import { SeederOptions } from 'typeorm-extension';
 import { User } from './entities/user';
 
 import * as env from 'dotenv';
+import { Project } from 'src/entities/project';
+import { Investment } from 'src/entities/investment';
 
 env.config();
 
@@ -15,7 +17,7 @@ export const typeormConfig: DataSourceOptions & SeederOptions = {
   database: process.env.DB_NAME || 'qvema',
   synchronize: true,
   ssl: false,
-  entities: [User],
+  entities: [User, Project, Investment],
   seeds: ['src/seeds/**/*{.ts,.js'],
   factories: ['src/factories/**/*{.ts,.js}']
 }

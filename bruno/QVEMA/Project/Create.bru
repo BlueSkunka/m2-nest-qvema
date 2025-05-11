@@ -1,0 +1,24 @@
+meta {
+  name: Create
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/projects
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "Mon projet",
+    "description": "Mon fabuleux projet pour voler l'argent des investisseurs",
+    "budget": 34560,
+    "category": "art"
+  }
+}
