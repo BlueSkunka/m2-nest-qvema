@@ -8,9 +8,11 @@ import { Project } from 'src/entities/project';
 import { UserDecorator } from 'src/auth/user.decorator';
 import { PayloadInterface } from 'src/auth/payload.interface';
 import { plainToInstance } from 'class-transformer';
+import { OwnershipGuard } from 'src/commons/guards/ownership.guard';
+import { OwnershipOptions } from 'src/commons/interfaces/ownership.options.interface';
 
 @Controller({path: 'projects'})
-@UseGuards(JwtGuard, RolesGuard)
+@UseGuards(JwtGuard, RolesGuard, OwnershipGuard)
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
@@ -33,6 +35,7 @@ export class ProjectController {
 
   @Put(':id')
   @Roles(RoleEnum.ENTREPENOR.toString())
+  @OwnershipOptions({entity: Project, field: 'user.id', param: 'id'})
   async update(@Param('id') id: string, @Body() project: Partial<Project>) {
     return this.projectService.update(+id, project);
   }
