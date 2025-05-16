@@ -24,7 +24,7 @@ export class Project {
   })
   category: CategoryEnum;
 
-  @ManyToOne(() => User, (user) => user.projects, {nullable: false})
+  @ManyToOne(() => User, (user) => user.projects, {nullable: false, onDelete: 'CASCADE'})
   @JoinColumn()
   @Exclude()
   user: User;
@@ -32,7 +32,7 @@ export class Project {
   @CreateDateColumn()
   createdAt: Date;
 
-  @OneToMany(() => Investment, (investment) => investment.project)
+  @OneToMany(() => Investment, (investment) => investment.project, {onDelete: 'CASCADE'})
   investments: Investment[]
 
   @Expose({name: 'userId'})

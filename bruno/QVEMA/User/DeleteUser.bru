@@ -5,7 +5,11 @@ meta {
 }
 
 delete {
-  url: {{url}}/users/1
+  url: {{url}}/users/00000000-0000-0000-0000-000000000000
   body: none
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
 }

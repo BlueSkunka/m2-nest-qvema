@@ -39,7 +39,7 @@ export class User {
   createdAt: Date;
 
   @Exclude()
-  @OneToMany(() => Project, (project) => project.user)
+  @OneToMany(() => Project, (project) => project.user, {onDelete: 'CASCADE'})
   projects: Project[]
 
   @Column({
@@ -48,7 +48,7 @@ export class User {
   })
   interests: CategoryEnum[]
 
-  @OneToMany(() => Investment, (investment) => investment.investor)
+  @OneToMany(() => Investment, (investment) => investment.investor, {onDelete: 'CASCADE'})
   investments: Investment[]
 
   @BeforeInsert()

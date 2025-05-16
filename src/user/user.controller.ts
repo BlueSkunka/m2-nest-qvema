@@ -9,6 +9,7 @@ import { FastifyRequest } from 'fastify';
 import { UserDecorator } from 'src/auth/user.decorator';
 import { PayloadInterface } from 'src/auth/payload.interface';
 import { plainToInstance } from 'class-transformer';
+import { RoleEnum } from 'src/enums/role.enum';
 
 @Controller({ path: 'users' })
 @UseGuards(JwtGuard, RolesGuard)
@@ -48,7 +49,8 @@ export class UserController {
     }
 
     @Delete(':id')
-    async deleteUser(@Param('id') id: string): Promise<void> {
+    @Roles(RoleEnum.ADMIN.toString())
+    async deleteUser(@Param('id') id: string, @UserDecorator() payload: PayloadInterface): Promise<void> {
         return this.userService.remove(id);
     }
 }
