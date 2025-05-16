@@ -29,7 +29,13 @@ export class ProjectService {
   }
 
   async findOne(id: number): Promise<Project | null> {
-    return this.projectRepository.findOne({where: {id}});
+    const project = await this.projectRepository.findOne({where: {id}});
+
+    if (!project) {
+      throw new NotFoundException('Projet non trouvé');
+    }
+
+    return project;
   }
 
   async update(id: number, projectData: Partial<Project>) : Promise<Project>{
