@@ -32,7 +32,7 @@ export class OwnershipGuard implements CanActivate {
     if (!options) return true;
 
     // Déstructuration de l'interface
-    const { entity, field, param } = options;
+    const { entity, field, param, adminBypass } = options;
 
     // Récupération de la requete
     const request = context.switchToHttp().getRequest();
@@ -55,6 +55,11 @@ export class OwnershipGuard implements CanActivate {
 
     if (!resource) {
       throw new NotFoundException(`La ressource "${entity}" n'a pas été trouvé`);
+    }
+
+    // Si L'admin a le droit d'accès
+    if (adminBypass && user.role === 'admin') {
+      return true;
     }
 
     const fieldValues = field.split('.');
