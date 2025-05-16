@@ -35,12 +35,14 @@ export class ProjectController {
 
   @Put(':id')
   @Roles(RoleEnum.ENTREPENOR.toString())
-  @OwnershipOptions({entity: Project, field: 'user.id', param: 'id'})
+  @OwnershipOptions({entity: Project, field: 'user.id', param: 'id', adminBypass: false})
   async update(@Param('id') id: string, @Body() project: Partial<Project>) {
     return this.projectService.update(+id, project);
   }
 
   @Delete(':id')
+  @Roles(RoleEnum.ENTREPENOR.toString(), RoleEnum.ADMIN.toString())
+  @OwnershipOptions({entity: Project, field: 'user.id', param: 'id', adminBypass: true})
   async remove(@Param('id') id: string) {
     return this.projectService.remove(+id);
   }
