@@ -1,0 +1,24 @@
+meta {
+  name: Update
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{url}}/projects/18
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "MODIFIER",
+    "description": "OUAIS OUAIS VIENS LIRE",
+    "budget": 89560,
+    "category": "lecture"
+  }
+}
