@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { User } from '../entities/user';
 import { InjectRepository } from '@nestjs/typeorm';
 import UserRepository from './user.repository';
 import * as bcrypt from 'bcrypt';
 import { DeepPartial } from 'typeorm';
+import { CategoryEnum } from 'src/enums/category.enum';
 
 @Injectable()
 export class UserService {
@@ -49,5 +50,32 @@ export class UserService {
 
     async findOneByEmail(email: string): Promise<User | null> {
         return this.userRepository.findOneByEmail(email);
+    }
+
+    async addInterest(interest: string, uuid: string): Promise<User> {
+        const category = Object.values(CategoryEnum).find(v => v === interest);
+
+        if (!category) {
+            throw new BadRequestException("Ce centre d'intérêt n'est pas disponible");
+        }
+
+        const user = await this.findOne(uuid);
+
+        if (!user) {
+            throw new UnauthorizedException("User is not logged");
+        }
+
+        // Si l'utilisateur n'a pas encore d'interets, initialisation du tableau
+        if (!user.interests) {
+            user.interests = [];
+        }
+
+        if (user.interests.includes(category)) {
+            throw new BadRequestException("Ce centre d'intérêt est déjà rattaché à cotre profile")
+        }
+
+        user.interests.push(category);
+
+        return this.userRepository.save(user);
     }
 }

@@ -7,6 +7,7 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { typeormConfig } from './typeorm.config';
 import { ProjectModule } from './project/project.module';
+import { CategoryController } from './category/category.controller';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { ProjectModule } from './project/project.module';
     TypeOrmModule.forRoot(typeormConfig),
     ProjectModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, CategoryController],
   providers: [AppService],
 })
 export class AppModule { }

@@ -10,6 +10,7 @@ import { UserDecorator } from 'src/auth/user.decorator';
 import { PayloadInterface } from 'src/auth/payload.interface';
 import { plainToInstance } from 'class-transformer';
 import { RoleEnum } from 'src/enums/role.enum';
+import { CategoryEnum } from 'src/enums/category.enum';
 
 @Controller({ path: 'users' })
 @UseGuards(JwtGuard, RolesGuard)
@@ -37,10 +38,9 @@ export class UserController {
         return plainToInstance(User, updatedUser);
     }
 
-    @Roles('admin')
-    @Get('admin')
-    async admin() {
-        return {message: 'User is admin'}
+    @Put('interest/:interest')
+    async addInterest(@Param('interest') interest: string, @UserDecorator() payload: PayloadInterface): Promise<User> {
+        return this.userService.addInterest(interest, payload.userId);
     }
 
     @Get(':id')
@@ -53,4 +53,5 @@ export class UserController {
     async deleteUser(@Param('id') id: string, @UserDecorator() payload: PayloadInterface): Promise<void> {
         return this.userService.remove(id);
     }
+
 }
