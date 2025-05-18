@@ -11,6 +11,7 @@ import { PayloadInterface } from 'src/auth/payload.interface';
 import { plainToInstance } from 'class-transformer';
 import { RoleEnum } from 'src/enums/role.enum';
 import { CategoryEnum } from 'src/enums/category.enum';
+import { Project } from 'src/entities/project';
 
 @Controller({ path: 'users' })
 @UseGuards(JwtGuard, RolesGuard)
@@ -27,6 +28,11 @@ export class UserController {
     async profile(@UserDecorator() payload: PayloadInterface) {
         const userInfo = this.userService.findOne(payload.userId);
         return  plainToInstance(User, userInfo);
+    }
+
+    @Get('proposal')
+    async proposal(@UserDecorator() payload: PayloadInterface): Promise<Project[]> {
+        return this.userService.proposal(payload.userId);
     }
 
     @Put('profile')

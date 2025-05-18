@@ -3,14 +3,18 @@ import { User } from '../entities/user';
 import { InjectRepository } from '@nestjs/typeorm';
 import UserRepository from './user.repository';
 import * as bcrypt from 'bcrypt';
-import { DeepPartial } from 'typeorm';
+import { DeepPartial, In } from 'typeorm';
 import { CategoryEnum } from 'src/enums/category.enum';
+import { Project } from 'src/entities/project';
+import ProjectRepository from 'src/project/project.repository';
 
 @Injectable()
 export class UserService {
     constructor(
       @InjectRepository(User)
-      private readonly userRepository: typeof UserRepository
+      private readonly userRepository: typeof UserRepository,
+      @InjectRepository(Project)
+      private readonly projectRepository: typeof ProjectRepository
     ) {
     }
 
@@ -87,5 +91,24 @@ export class UserService {
         }
 
         return user.interests;
+    }
+
+    async proposal(uuid: string) {
+        const user = await this.findOne(uuid);
+
+        if (!user) {
+            throw new UnauthorizedException("User not logged");
+        }
+
+        // Si l'utilisateur n'a pas d'interet, renvoie un tableau vide
+        if (null === user.interests) {
+            return [];
+        }
+
+        return this.projectRepository.find({
+            where: {
+                category: In(user.interests)
+            }
+        })
     }
 }
