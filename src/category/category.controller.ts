@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { CategoryEnum } from 'src/enums/category.enum';
 
 @Controller('categories')

@@ -48,6 +48,11 @@ export class UserController {
         return this.userService.findOne(id);
     }
 
+    @Get(':id/interests')
+    async userCategories(@Param('id') userUuid: string) {
+        return this.userService.listInterest(userUuid);
+    }
+
     @Delete(':id')
     @Roles(RoleEnum.ADMIN.toString())
     async deleteUser(@Param('id') id: string, @UserDecorator() payload: PayloadInterface): Promise<void> {

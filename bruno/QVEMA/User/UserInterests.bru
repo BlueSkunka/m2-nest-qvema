@@ -1,0 +1,15 @@
+meta {
+  name: UserInterests
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{url}}/users/f8848799-e95c-4162-a8b9-c1c654dc796e/interests
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

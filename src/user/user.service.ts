@@ -78,4 +78,14 @@ export class UserService {
 
         return this.userRepository.save(user);
     }
+
+    async listInterest(uuid: string) {
+        const user = await this.findOne(uuid);
+
+        if (!user) {
+            throw new NotFoundException("Utilisateur non trouvé");
+        }
+
+        return user.interests;
+    }
 }
