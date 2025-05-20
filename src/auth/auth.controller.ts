@@ -11,7 +11,7 @@ export class AuthController {
   ) {
   }
 
-  @Post('in')
+  @Post('login')
   async login(@Body() credentials: Partial<User | null>) {
     return this.authService.login(credentials);
   }

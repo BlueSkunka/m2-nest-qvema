@@ -56,8 +56,13 @@ export class UserService {
         return this.userRepository.findOneByEmail(email);
     }
 
-    async addInterest(interest: string, uuid: string): Promise<User> {
-        const category = Object.values(CategoryEnum).find(v => v === interest);
+    async addInterest(interest: Partial<any>, uuid: string): Promise<User> {
+        // Si le paramètre est présent
+        if (!interest.interest) {
+            throw new BadRequestException("Aucun intérêt spécifié dans la requête");
+        }
+
+        const category = Object.values(CategoryEnum).find(v => v.toString() === interest.interest);
 
         if (!category) {
             throw new BadRequestException("Ce centre d'intérêt n'est pas disponible");

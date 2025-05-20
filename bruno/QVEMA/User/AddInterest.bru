@@ -4,8 +4,18 @@ meta {
   seq: 8
 }
 
-put {
-  url: {{url}}/users/interest/lecture
-  body: none
-  auth: none
+post {
+  url: {{url}}/users/interest
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "interest": "lecture"
+  }
 }

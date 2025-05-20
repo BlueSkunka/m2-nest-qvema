@@ -44,8 +44,8 @@ export class UserController {
         return plainToInstance(User, updatedUser);
     }
 
-    @Put('interest/:interest')
-    async addInterest(@Param('interest') interest: string, @UserDecorator() payload: PayloadInterface): Promise<User> {
+    @Post('interest/')
+    async addInterest(@Body() interest: Partial<any>, @UserDecorator() payload: PayloadInterface): Promise<User> {
         return this.userService.addInterest(interest, payload.userId);
     }
 

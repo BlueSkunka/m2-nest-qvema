@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { CategoryEnum } from 'src/enums/category.enum';
 
-@Controller('categories')
+@Controller('interests')
 export class CategoryController {
   @Get('')
   async listCategories(): Promise<string[]> {
