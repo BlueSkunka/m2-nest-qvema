@@ -12,9 +12,7 @@ import ProjectRepository from 'src/project/project.repository';
 export class UserService {
     constructor(
       @InjectRepository(User)
-      private readonly userRepository: typeof UserRepository,
-      @InjectRepository(Project)
-      private readonly projectRepository: typeof ProjectRepository
+      private readonly userRepository: typeof UserRepository
     ) {
     }
 
@@ -96,24 +94,5 @@ export class UserService {
         }
 
         return user.interests;
-    }
-
-    async proposal(uuid: string) {
-        const user = await this.findOne(uuid);
-
-        if (!user) {
-            throw new UnauthorizedException("User not logged");
-        }
-
-        // Si l'utilisateur n'a pas d'interet, renvoie un tableau vide
-        if (null === user.interests) {
-            return [];
-        }
-
-        return this.projectRepository.find({
-            where: {
-                category: In(user.interests)
-            }
-        })
     }
 }

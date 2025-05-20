@@ -46,4 +46,9 @@ export class ProjectController {
   async remove(@Param('id') id: string) {
     return this.projectService.remove(+id);
   }
+
+  @Get('recommended')
+  async proposal(@UserDecorator() payload: PayloadInterface): Promise<Project[]> {
+    return this.projectService.recommended(payload.userId);
+  }
 }

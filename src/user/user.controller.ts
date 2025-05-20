@@ -35,11 +35,6 @@ export class UserController {
         return this.userService.listInterest(payload.userId);
     }
 
-    @Get('proposal')
-    async proposal(@UserDecorator() payload: PayloadInterface): Promise<Project[]> {
-        return this.userService.proposal(payload.userId);
-    }
-
     @Put('profile')
     async profileEdit(@Body() user: Partial<User>, @UserDecorator() payload: PayloadInterface) {
         if (user.role) {
