@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { typeormConfig } from './typeorm.config';
 import { ProjectModule } from './project/project.module';
 import { CategoryController } from './category/category.controller';
+import { InvestmentModule } from './investment/investment.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { CategoryController } from './category/category.controller';
     AuthModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot(typeormConfig),
-    ProjectModule
+    ProjectModule,
+    InvestmentModule
   ],
   controllers: [AppController, CategoryController],
   providers: [AppService],
