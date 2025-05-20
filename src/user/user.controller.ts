@@ -30,6 +30,11 @@ export class UserController {
         return  plainToInstance(User, userInfo);
     }
 
+    @Get('interests')
+    async userCategories(@UserDecorator() payload: PayloadInterface) {
+        return this.userService.listInterest(payload.userId);
+    }
+
     @Get('proposal')
     async proposal(@UserDecorator() payload: PayloadInterface): Promise<Project[]> {
         return this.userService.proposal(payload.userId);
@@ -54,10 +59,6 @@ export class UserController {
         return this.userService.findOne(id);
     }
 
-    @Get(':id/interests')
-    async userCategories(@Param('id') userUuid: string) {
-        return this.userService.listInterest(userUuid);
-    }
 
     @Delete(':id')
     @Roles(RoleEnum.ADMIN.toString())
