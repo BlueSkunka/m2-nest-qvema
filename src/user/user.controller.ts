@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, ForbiddenException, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    ForbiddenException,
+    Get,
+    HttpCode,
+    Param,
+    Post,
+    Put,
+    Req,
+    UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../entities/user';
 import { AuthGuard } from '@nestjs/passport';
@@ -57,6 +69,7 @@ export class UserController {
 
     @Delete(':id')
     @Roles(RoleEnum.ADMIN.toString())
+    @HttpCode(204)
     async deleteUser(@Param('id') id: string, @UserDecorator() payload: PayloadInterface): Promise<void> {
         return this.userService.remove(id);
     }

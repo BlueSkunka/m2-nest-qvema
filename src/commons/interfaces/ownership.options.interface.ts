@@ -5,6 +5,7 @@ export const OWNERSHIP_KEY = 'ownership';
 export interface OwnershipOptionsInterface {
   entity: any, // Classe de l'entitéé
   field: string, // Attribut représentant la possession
+  fieldName: string, // Nom du hamp dans l'entité
   param: string, // Nom du paramètre dans l'url
   adminBypass: boolean, // Permet au role admin de bypass le controle
 }

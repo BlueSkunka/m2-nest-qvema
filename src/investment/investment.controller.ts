@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, HttpCode } from '@nestjs/common';
 import { InvestmentService } from './investment.service';
 import { Investment } from 'src/entities/investment';
 import { JwtGuard } from 'src/auth/jwt.guard';
@@ -36,7 +36,8 @@ export class InvestmentController {
 
   @Delete(':id')
   @Roles(RoleEnum.INVESTOR.toString())
-  @OwnershipOptions({entity: Investment, field: 'investor.id', param: 'id', adminBypass: false})
+  @OwnershipOptions({entity: Investment, field: 'investor.id', fieldName: 'investor', param: 'id', adminBypass: true})
+  @HttpCode(204)
   async remove(@Param('id') id: number) {
     return this.investmentService.delete(id);
   }

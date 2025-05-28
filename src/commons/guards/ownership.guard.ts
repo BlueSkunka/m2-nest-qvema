@@ -26,13 +26,12 @@ export class OwnershipGuard implements CanActivate {
       OWNERSHIP_KEY,
       context.getHandler()
     );
-    console.log(options);
 
     // Si aucun controle nécessaire
     if (!options) return true;
 
     // Déstructuration de l'interface
-    const { entity, field, param, adminBypass } = options;
+    const { entity, field, fieldName, param, adminBypass } = options;
 
     // Récupération de la requete
     const request = context.switchToHttp().getRequest();
@@ -51,7 +50,7 @@ export class OwnershipGuard implements CanActivate {
     const repository: Repository<any> = this.dataSource.getRepository(entity);
 
     // Récupération de la ressource à sécuriser
-    const resource = await repository.findOne({where: {id}, relations: ['user']});
+    const resource = await repository.findOne({where: {id}, relations: [fieldName]});
 
     if (!resource) {
       throw new NotFoundException(`La ressource "${entity}" n'a pas été trouvé`);

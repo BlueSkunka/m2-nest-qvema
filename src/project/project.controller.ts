@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Put, HttpCode } from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
@@ -35,14 +35,15 @@ export class ProjectController {
 
   @Put(':id')
   @Roles(RoleEnum.ENTREPENOR.toString())
-  @OwnershipOptions({entity: Project, field: 'user.id', param: 'id', adminBypass: false})
+  @OwnershipOptions({entity: Project, field: 'user.id', fieldName: 'user', param: 'id', adminBypass: true})
   async update(@Param('id') id: string, @Body() project: Partial<Project>) {
     return this.projectService.update(+id, project);
   }
 
   @Delete(':id')
   @Roles(RoleEnum.ENTREPENOR.toString(), RoleEnum.ADMIN.toString())
-  @OwnershipOptions({entity: Project, field: 'user.id', param: 'id', adminBypass: true})
+  @OwnershipOptions({entity: Project, field: 'user.id', fieldName: 'user', param: 'id', adminBypass: true})
+  @HttpCode(204)
   async remove(@Param('id') id: string) {
     return this.projectService.remove(+id);
   }
