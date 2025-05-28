@@ -1,0 +1,15 @@
+meta {
+  name: List Invest Projet
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{url}}/investments/project/19
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

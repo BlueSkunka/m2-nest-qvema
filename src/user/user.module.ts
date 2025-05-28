@@ -6,9 +6,10 @@ import { User } from '../entities/user';
 import { JwtModule } from '@nestjs/jwt';
 import UserRepository from './user.repository';
 import { ProjectModule } from 'src/project/project.module';
+import { InvestmentModule } from 'src/investment/investment.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User]), JwtModule, forwardRef(() => ProjectModule)],
+    imports: [TypeOrmModule.forFeature([User]), JwtModule, forwardRef(() => ProjectModule), forwardRef(() => InvestmentModule)],
     providers: [
         UserService,
         {

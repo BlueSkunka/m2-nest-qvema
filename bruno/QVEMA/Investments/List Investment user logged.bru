@@ -1,0 +1,15 @@
+meta {
+  name: List Investment user logged
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/investments
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
